@@ -1,0 +1,42 @@
+<!--
+ * @Author: Arley
+ * @Email: mingleilee@126.com
+ * @Date: 2020-10-17 16:31:12
+ * @version: 
+ * @LastEditors: Arley
+ * @LastEditTime: 2020-10-17 16:31:36
+ * @Description: 
+ * @FilePath: /websoket-practice/index.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>模拟WebSocket 实现数据实时刷新</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+  </head>
+  <body>
+    <div id="container">
+      <button class="connect">建立连接</button>
+      <button class="close">关闭连接</button>
+    </div>
+    <script>
+      //建立 WebSocket 连接的请求
+      var ws = new WebSocket('ws://localhost:8089')
+      //打开连接
+      $('.connect').click(() => {
+        //客户端收到服务端发来的消息时，会触发onmessage事件，参数res.data中包含server传输过来的数据
+        ws.onmessage = function(res) {
+          console.log('接收值: ' + res.data)
+          let stockData = JSON.parse(res.data) //服务端返回的数
+        }
+      }),
+      //关闭socket链接
+      $('.close').click(() => {
+        ws.close() 
+      })
+    </script>
+  </body>
+</html>
